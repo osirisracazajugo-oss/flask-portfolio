@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Linked List</h1>
+<form method="POST">
+  <input type="text" name="value" placeholder="Value">
+  <button name="action" value="add_start">Add to start</button>
+  <button name="action" value="add_end">Add to end</button>
+  <button name="action" value="remove_first">Remove first</button>
+  <button name="action" value="remove_last">Remove last</button>
+  <button name="action" value="remove_value">Remove value</button>
+  <button name="action" value="search">Search</button>
+  <input type="text" name="after" placeholder="After this value">
+  <button name="action" value="insert_after">Insert after</button>
+</form>
+<p>{{ items | join(" → ") if items else "List is empty" }}</p>
+{% if message %}<p>{{ message }}</p>{% endif %}
+{% endblock %}

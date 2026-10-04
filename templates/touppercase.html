@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>To Uppercase</h1>
+<form method="POST">
+  <input type="text" name="inputString" placeholder="Type something" required>
+  <button type="submit">Convert</button>
+</form>
+{% if result %}
+<p>{{ result }}</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Osiris | Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/works/area/circle">Circle</a>
+        <a href="/works/area/triangle">Triangle</a>
+        <a href="/linkedlist">Linked List</a>
+        <a href="/contact">Contact</a>
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+</html>
