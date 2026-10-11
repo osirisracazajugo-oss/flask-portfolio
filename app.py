@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 from linkedlist import LinkedList
+from stackalgorithm import Stack
+
+st = Stack()
 
 ll = LinkedList()
 
@@ -80,6 +83,27 @@ def linkedlist():
         if action != 'search':
             return redirect(url_for('linkedlist'))
     return render_template('linkedlist.html', items=ll_items(), message=message)
+
+@app.route('/stack', methods=['GET', 'POST'])
+def stack_page():
+    message = None
+    if request.method == 'POST':
+        action = request.form.get('action')
+        value = request.form.get('value', '')
+        if action == 'push' and value:
+            st.push(value)
+            return redirect(url_for('stack_page'))
+        elif action == 'pop':
+            try:
+                message = f"Popped: {st.pop()}"
+            except IndexError:
+                message = "Stack is empty"
+        elif action == 'peek':
+            try:
+                message = f"Top: {st.peek()}"
+            except IndexError:
+                message = "Stack is empty"
+    return render_template('stack.html', items=st.to_list()[::-1], size=st.size(), message=message)
 
 @app.route('/contact')
 def contact():
