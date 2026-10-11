@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Stack</h1>
+<form method="POST">
+  <input type="text" name="value" placeholder="Value">
+  <button name="action" value="push">Push</button>
+  <button name="action" value="pop">Pop</button>
+  <button name="action" value="peek">Peek</button>
+</form>
+<p>{{ items | join(" → ") if items else "Stack is empty" }}</p>
+<p>Size: {{ size }}</p>
+{% if message %}<p>{{ message }}</p>{% endif %}
+{% endblock %}
