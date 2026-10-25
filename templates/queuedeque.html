@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<p class="tag">PROGRAMMING WORKS</p>
+<h1>Queue and Deque</h1>
+
+{% if message %}<p><strong>{{ message }}</strong></p>{% endif %}
+
+<h2>Queue (front on the left)</h2>
+<p>{{ q_items }} | Size: {{ q_items|length }}</p>
+<form method="POST">
+  <input type="text" name="value" placeholder="Item">
+  <button name="action" value="enqueue">Enqueue</button>
+  <button name="action" value="dequeue">Dequeue</button>
+  <button name="action" value="peek">Peek</button>
+</form>
+
+<h2>Deque (front on the left)</h2>
+<p>{{ d_items }} | Size: {{ d_items|length }}</p>
+<form method="POST">
+  <input type="text" name="value" placeholder="Item">
+  <button name="action" value="add_front">Add front</button>
+  <button name="action" value="add_rear">Add rear</button>
+  <button name="action" value="remove_front">Remove front</button>
+  <button name="action" value="remove_rear">Remove rear</button>
+  <button name="action" value="peek_front">Peek front</button>
+  <button name="action" value="peek_rear">Peek rear</button>
+</form>
+{% endblock %}
