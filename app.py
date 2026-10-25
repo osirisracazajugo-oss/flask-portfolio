@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for
 from linkedlist import LinkedList
 from stackalgorithm import Stack
+from queue_deque import Queue, Deque          # NEW
 
 st = Stack()
 
 ll = LinkedList()
+
+q = Queue()                                    # NEW
+dq = Deque()                                   # NEW
 
 def ll_items():
     items, cur = [], ll.head
@@ -104,6 +108,39 @@ def stack_page():
             except IndexError:
                 message = "Stack is empty"
     return render_template('stack.html', items=st.to_list()[::-1], size=st.size(), message=message)
+
+# NEW: Queue and Deque page
+@app.route('/queuedeque', methods=['GET', 'POST'])
+def queuedeque():
+    message = None
+    if request.method == 'POST':
+        action = request.form.get('action')
+        value = request.form.get('value', '')
+        try:
+            if action == 'enqueue' and value:
+                q.enqueue(value)
+            elif action == 'dequeue':
+                message = f"Dequeued: {q.dequeue()}"
+            elif action == 'peek':
+                message = f"Front: {q.peek()}"
+            elif action == 'add_front' and value:
+                dq.add_front(value)
+            elif action == 'add_rear' and value:
+                dq.add_rear(value)
+            elif action == 'remove_front':
+                message = f"Removed front: {dq.remove_front()}"
+            elif action == 'remove_rear':
+                message = f"Removed rear: {dq.remove_rear()}"
+            elif action == 'peek_front':
+                message = f"Front: {dq.peek_front()}"
+            elif action == 'peek_rear':
+                message = f"Rear: {dq.peek_rear()}"
+        except IndexError:
+            message = "It's empty."
+        if message is None:
+            return redirect(url_for('queuedeque'))
+    return render_template('queuedeque.html', q_items=q.to_list(),
+                           d_items=dq.to_list(), message=message)
 
 @app.route('/contact')
 def contact():
