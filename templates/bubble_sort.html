@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<p class="tag">PROGRAMMING WORKS</p>
+<h1>Bubble Sort</h1>
+
+<form method="post">
+  <input type="text" name="numbers" placeholder="5, 3, 8, 2" required>
+  <button type="submit">Sort</button>
+</form>
+
+{% if error %}
+  <p>{{ error }}</p>
+{% endif %}
+
+{% if result is not none %}
+  <p>Original: {{ original }}</p>
+  <p>Sorted: {{ result }}</p>
+{% endif %}
+
+<h2>About</h2>
+<p>Bubble Sort compares neighboring elements and swaps them if they are in the wrong order. Each pass moves the largest remaining value to the end.</p>
+<p>Time: O(n²) average/worst, O(n) best. Space: O(1). Stable.</p>
+{% endblock %}
