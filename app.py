@@ -1,14 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
 from linkedlist import LinkedList
 from stackalgorithm import Stack
-from queue_deque import Queue, Deque          # NEW
+from queue_deque import Queue, Deque
+from bubble_sort import bubble_sort
 
 st = Stack()
 
 ll = LinkedList()
 
-q = Queue()                                    # NEW
-dq = Deque()                                   # NEW
+q = Queue()                                    
+dq = Deque()                                   
 
 def ll_items():
     items, cur = [], ll.head
@@ -27,6 +28,7 @@ def index():
 def profile():
     return render_template('profile.html')
 
+
 @app.route('/works', methods=['GET', 'POST'])
 def works():
     result = None
@@ -34,6 +36,7 @@ def works():
         input_string = request.form.get('inputString', '')
         result = input_string.upper()
     return render_template('touppercase.html', result=result)
+
 
 @app.route('/works/area/circle', methods=['GET', 'POST'])
 def acircle():
@@ -52,15 +55,6 @@ def atriangle():
         result = 0.5 * base * height
     return render_template('triangle.html', result=result)
 
-# @app.route('/areaOfcirle', methods=['GET', 'POST'])
-# def areaOfcirle():
-#     result = None
-#     name=request.get('name','')
-#     print(name)
-#     if request.method == 'POST':
-#         input_string = request.form.get('inputradius', '')
-#         result = int(input_string) * int(input_string) * 3.14
-#     return render_template('areaCircle.html', result=result)
 
 @app.route('/linkedlist', methods=['GET', 'POST'])
 def linkedlist():
@@ -109,7 +103,7 @@ def stack_page():
                 message = "Stack is empty"
     return render_template('stack.html', items=st.to_list()[::-1], size=st.size(), message=message)
 
-# NEW: Queue and Deque page
+
 @app.route('/queuedeque', methods=['GET', 'POST'])
 def queuedeque():
     message = None
@@ -141,6 +135,19 @@ def queuedeque():
             return redirect(url_for('queuedeque'))
     return render_template('queuedeque.html', q_items=q.to_list(),
                            d_items=dq.to_list(), message=message)
+
+
+@app.route('/bubblesort', methods=['GET', 'POST'])
+def bubblesort_page():
+    original, result, error = None, None, None
+    if request.method == 'POST':
+        try:
+            original = [int(x) for x in request.form.get('numbers', '').replace(',', ' ').split()]
+            result = bubble_sort(original.copy())
+        except ValueError:
+            error = "Enter whole numbers only."
+    return render_template('bubble_sort.html', original=original, result=result, error=error)
+
 
 @app.route('/contact')
 def contact():
