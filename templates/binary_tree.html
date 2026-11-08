@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<p class="tag">PROGRAMMING WORKS</p>
+<h1>Binary Search Tree</h1>
+
+<form method="POST">
+  <input type="text" name="value" placeholder="One number, or a list: 50, 30, 70" autocomplete="off">
+  <button type="submit" name="action" value="insert">Insert</button>
+  <button type="submit" name="action" value="search">Search</button>
+  <button type="submit" name="action" value="delete">Delete</button>
+  <button type="submit" name="action" value="post_order">Post-order</button>
+  <button type="submit" name="action" value="build">Build from list</button>
+  <button type="submit" name="action" value="clear">Clear</button>
+</form>
+
+{% if message %}<p>{{ message }}</p>{% endif %}
+{% if post is not none %}<p>Post-order: {{ post }}</p>{% endif %}
+
+{% if nodes %}
+<div style="overflow-x:auto">
+  <svg width="{{ width }}" height="{{ height }}" viewBox="0 0 {{ width }} {{ height }}" role="img" aria-label="Binary search tree diagram">
+    {% for x1, y1, x2, y2 in edges %}
+    <line x1="{{ x1 }}" y1="{{ y1 }}" x2="{{ x2 }}" y2="{{ y2 }}" stroke="currentColor" stroke-width="2" opacity="0.6"/>
+    {% endfor %}
+    {% for n in nodes %}
+    <circle cx="{{ n.x }}" cy="{{ n.y }}" r="18" fill="none" stroke="currentColor"
+            stroke-width="{{ 5 if found is not none and n.value == found else 2 }}"/>
+    <text x="{{ n.x }}" y="{{ n.y }}" text-anchor="middle" dominant-baseline="central"
+          fill="currentColor" font-size="14" font-weight="600">{{ n.value }}</text>
+    {% endfor %}
+  </svg>
+</div>
+{% else %}
+<p>The tree is empty. Insert a number or build one from a list.</p>
+{% endif %}
+{% endblock %}
