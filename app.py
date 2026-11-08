@@ -3,6 +3,9 @@ from linkedlist import LinkedList
 from stackalgorithm import Stack
 from queue_deque import Queue, Deque
 from bubble_sort import bubble_sort
+from binary_tree import BinarySearchTree
+
+bt = BinarySearchTree()
 
 st = Stack()
 
@@ -148,6 +151,33 @@ def bubblesort_page():
             error = "Enter whole numbers only."
     return render_template('bubble_sort.html', original=original, result=result, error=error)
 
+
+@app.route('/binarytree', methods=['GET', 'POST'])
+def binarytree_page():
+    message, found, post = None, None, None
+    if request.method == 'POST':
+        action = request.form.get('action')
+        raw = request.form.get('value', '')
+        try:
+            if action == 'build':
+                bt.build(raw)
+            elif action == 'clear':
+                bt.root = None
+            elif action == 'post_order':
+                post = bt.post_traversal(bt.root, "")
+            elif action == 'insert':
+                bt.insert(int(raw))
+            elif action == 'delete':
+                bt.root = bt.delete_node(bt.root, int(raw))
+            elif action == 'search':
+                found = int(raw) if bt.search(bt.root, int(raw)) else None
+                message = "Found" if found is not None else "Not found"
+        except ValueError:
+            message = "Enter whole numbers only."
+        if message is None and post is None:
+            return redirect(url_for('binarytree_page'))
+    return render_template('binary_tree.html', **bt.layout(),
+                           message=message, found=found, post=post)
 
 @app.route('/contact')
 def contact():
